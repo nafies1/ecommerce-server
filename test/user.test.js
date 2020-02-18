@@ -94,7 +94,7 @@ describe('User Routes', () => {
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body).toHaveProperty('msg', 'Password cannot be empty or null')
+          expect(response.body.errors[0]).toHaveProperty('msg', 'Password cannot be empty or null')
           expect(response.status).toBe(400)
           done()
         })
@@ -111,7 +111,7 @@ describe('User Routes', () => {
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body).toHaveProperty('msg', 'Password is too short. Minimum password length is 6')
+          expect(response.body.errors[0]).toHaveProperty('msg', 'Password is too short. Minimum password length is 6')
           expect(response.status).toBe(400)
           done()
         })

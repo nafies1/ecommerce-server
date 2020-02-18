@@ -198,15 +198,122 @@ Route | Method | Description
 
 ## Product :
 
-Route | Method | Request(s) | Response(s) | Description
----|---|---|---|---
-`/product` | POST | **Headers**<br>token: `String`<br>**Body**<br>title: `String`<br>content: `String`<br>File: `File` | **Success**<br>`201` Created<br>**Error**<br>`401` Authorization Error<br>`500` Internal Server Error | Create a product
+Route | Method | Description
+---|---|---
+`/product` | POST | Create a product
 `/product` | GET | **Headers**<br>`None` | **Success**<br>`200` OK<br>**Error**<br>`401` Authorization Error<br>`500` Internal Server Error | Get all products
 `/product/:id` | GET | **Headers**<br>token: `String` | **Success**<br>`200` OK<br>**Error**<br>`401` Authorization Error<br>`500` Internal Server Error | Get one product
 `/product/:id` | PUT | **Headers**<br>token: `String`<br>**Body**<br>title: `String`<br>content: `String`<br>file: `File` | **Success**<br>`200` OK<br>**Error**<br>`401` Authorization Error<br>`500` Internal Server Error | Update a product
 `/product/:id` | PATCH | **Headers**<br>token: `String`<br>**Body**<br>published: `Boolean` | **Success**<br>`200` OK<br>**Error**<br>`401` Authorization Error<br>`500` Internal Server Error | Update Stock
 `/product/:id` | DELETE | **Headers**<br>token: `String` | **Success**<br>`200` OK<br>**Error**<br>`401` Authorization Error<br>`500` Internal Server Error | Delete a product
 
+**Add Product**	
+----	
+  Add product endpoint.	
+
+* **URL**	
+
+  /product	
+
+* **Method:**	
+
+  `POST`	
+
+* **Headers**	
+
+  token : `string` (required)   
+
+* **Data Params**	
+
+  name: `string` (required)  
+  price: `integer` (required)  
+  stock: `integer` (required)  
+  description: `string`   
+  image: `string`
+
+* **Success Response:**	
+  * **Code:** 200 <br />	
+  *  **Content :** 	
+      ```json	
+      {
+        "msg": "Add product success",
+        "id": 33,
+        "name": "Sepatu",
+        "price": 100000,
+        "stock": 10,
+        "description": "Sepatu makan",
+        "image": "https://pbs.twimg.com/profile_images/725275730267926528/dGPyaQZ6_400x400.jpg"
+      }
+      ```	
+
+* **Error Response:**	
+
+  * **Code:** 500 <br />	
+  *  **Content:** 
+     ```json
+      { "msg" : "Internal Server Error" }
+     ```	
+
+  OR	
+
+  * **Code:** 401 <br />	
+  *  **Content:** 
+      ```json
+        {
+          "msg": "You are not authorized to modify product data. Only verified admin can modify product data"
+        }
+      ```	
+
+  OR	
+
+  * **Code:** 400 <br />	
+  *  **Content:** 
+      ```json
+        {
+          "errors": [
+            {
+              "msg": "Minimum stock is 0"
+            },
+            {
+              "msg": "Minimum price is 0"
+            }
+          ],
+          "name": "SequelizeValidationError"
+        }
+      ```
+      or
+      ```json
+        {
+          "errors": [
+            {
+              "msg": "Stock is number only",
+            },
+            {
+              "msg": "Price is number only",
+            }
+          ],
+          "name": "SequelizeValidationError"
+        }
+      ```
+      or
+      ```json
+        {
+          "errors": [
+            {
+              "msg": "Name is required"
+            },
+            {
+              "msg": "Stock is required"
+            },
+            {
+              "msg": "Price is required"
+            },
+          ],
+          "name": "SequelizeValidationError"
+        }
+      ```
+      
+--------------
 
 ### Undefined Route :
 

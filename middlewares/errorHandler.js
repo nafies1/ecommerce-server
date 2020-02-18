@@ -1,5 +1,4 @@
 module.exports = (err, req, res, next) => {
-  console.log('ini error handler:', err)
   if (err.status === 'bad_request') {
     res.status(400).json({
       msg: err.msg
@@ -36,16 +35,17 @@ module.exports = (err, req, res, next) => {
     })
   }
   else if (err.name === 'SequelizeValidationError') {
-    let error = {}
+    let errors = []
     err.errors.forEach(eror => {
-      error.msg = eror.message
+      errors.push({ msg: eror.message })
     })
     res.status(400).json({
-      msg: error.msg,
+      errors,
       name: err.name
     })
   }
   else {
+    console.log('ini error handler:', err)
     res.status(500).json(err)
   }
 }
