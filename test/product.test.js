@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 describe('Product Routes', () => {
   let tokenAuthorized
   let tokenUnauthorized
-    describe.only('Add Product Test', () => {
+    describe('Add Product Test', () => {
     beforeEach((done) => {
       User.create({
         name: 'nafies',
@@ -123,10 +123,10 @@ describe('Product Routes', () => {
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body.errors[0]).toHaveProperty('msg', 'Name is required')
-          expect(response.body.errors[1]).toHaveProperty('msg', 'Stock is required')
-          expect(response.body.errors[2]).toHaveProperty('msg', 'Price is required')
-          expect(response.body.errors[1]).toHaveProperty('name', 'SequelizeValidationError')
+          expect(response.body.errors[0]).toHaveProperty('msg', 'Stock is required')
+          expect(response.body.errors[1]).toHaveProperty('msg', 'Price is required')
+          expect(response.body.errors[2]).toHaveProperty('msg', 'Name is required')
+          expect(response.body).toHaveProperty('name', 'SequelizeValidationError')
           expect(response.status).toBe(400)
           done()
         })
