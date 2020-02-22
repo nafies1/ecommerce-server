@@ -4,7 +4,9 @@
   "description": "TDD",
   "main": "app.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --testTimeout=30000"
+    "test": "jest --detectOpenHandles --testTimeout=30000",
+    "dev": "NODE_ENV=development nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "nafies1",
