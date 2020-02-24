@@ -49,6 +49,7 @@ class ProductController {
 
   static updateProduct (req, res, next) {
     const { name, price, stock, description, image } = req.body
+    const { id } = req.params
     Product.update({
         name,
         price,
@@ -56,10 +57,10 @@ class ProductController {
         description,
         image
     }, {
-      where: { id: Number(req.params.id) }
+      where: { id: Number(id) }
     })
       .then(product=>{
-          res.status(200).json({msg : `Product with id ${product.id} updated successfully`})
+          res.status(200).json({ msg : `Product with id ${id} updated successfully` })
       })
       .catch(err=>{
           next(err)
