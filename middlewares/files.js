@@ -12,7 +12,7 @@ const bucket = storage.bucket(CLOUD_BUCKET)
 const getPublicUrl = (filename) => {
   return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`
 }
-
+ 
 const sendUploadToGCS = (req, res, next) => {
   if (!req.file) {
     return res.status(204).json({
