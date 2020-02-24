@@ -8,7 +8,7 @@ const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT,
 }) 
 const bucket = storage.bucket(CLOUD_BUCKET)
-
+ 
 const getPublicUrl = (filename) => {
   return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`
 }
