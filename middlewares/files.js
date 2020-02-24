@@ -6,10 +6,6 @@ const CLOUD_BUCKET = process.env.CLOUD_BUCKET
 
 const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT,
-  credentials: {
-    client_email: process.env.CLIENT_EMAIL,
-    private_key: process.env.PRIVATE_KEY
-  }
 })
 const bucket = storage.bucket(CLOUD_BUCKET)
 
