@@ -6,7 +6,7 @@ const CLOUD_BUCKET = process.env.CLOUD_BUCKET
 
 const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT,
-})
+}) 
 const bucket = storage.bucket(CLOUD_BUCKET)
 
 const getPublicUrl = (filename) => {
