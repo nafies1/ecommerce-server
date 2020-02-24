@@ -6,7 +6,10 @@ const CLOUD_BUCKET = process.env.CLOUD_BUCKET
 
 const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT,
-  keyFilename: process.env.KEYFILE_PATH
+  credentials: {
+    client_email: process.env.CLIENT_EMAIL,
+    private_key: process.env.PRIVATE_KEY
+  }
 })
 const bucket = storage.bucket(CLOUD_BUCKET)
 
@@ -16,7 +19,9 @@ const getPublicUrl = (filename) => {
 
 const sendUploadToGCS = (req, res, next) => {
   if (!req.file) {
-    return next()
+    return res.status(204).json({
+      link: undefined
+    })
   }
   
   const gcsname = Date.now() + req.file.originalname

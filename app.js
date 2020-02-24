@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') require('dotenv').config()
+if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV === 'test') require('dotenv').config()
 
 const express = require('express')
 const app = express()
@@ -18,8 +18,10 @@ app.use('*', (req, res) => {
 
 app.use(errorHandler)
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Running on port', process.env.PORT || 3000)
-})
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(process.env.PORT || 3000, () => {
+    console.log('Running on port', process.env.PORT || 3000)
+  })
+}
 
-module.exports = app
+// module.exports = app
