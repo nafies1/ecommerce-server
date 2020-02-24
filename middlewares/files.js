@@ -5,19 +5,17 @@ const { Storage } = require('@google-cloud/storage')
 const CLOUD_BUCKET = process.env.CLOUD_BUCKET
 
 const storage = new Storage({
-  projectId: process.env.GCLOUD_PROJECT,
+  projectId: process.env.GCLOUD_PROJECT
 }) 
 const bucket = storage.bucket(CLOUD_BUCKET)
- 
+
 const getPublicUrl = (filename) => {
   return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`
 }
- 
+
 const sendUploadToGCS = (req, res, next) => {
   if (!req.file) {
-    return res.status(204).json({
-      link: undefined
-    })
+    return next()
   }
   
   const gcsname = Date.now() + req.file.originalname
