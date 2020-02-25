@@ -29,14 +29,14 @@ describe('User Routes', () => {
         .post('/auth/register')
         .send({
           name: 'nafies',
-          email: 'nafies1@nafies.tech',
+          email: 'nafies.beta2@gmail.com',
           password: 'mantapjiwa'
         })
         .set('admin_secret', 'adminMantapJiwa')
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body).toHaveProperty('email', 'nafies1@nafies.tech')
+          expect(response.body).toHaveProperty('email', 'nafies.beta2@gmail.com')
           expect(response.body).toHaveProperty('name', 'nafies')
           expect(response.body).toHaveProperty('id', expect.any(Number))
           expect(response.body).toHaveProperty('isVerified', false)
@@ -53,13 +53,13 @@ describe('User Routes', () => {
         .post('/auth/register')
         .send({
           name: 'nafies',
-          email: 'nafies1@nafies.tech',
+          email: 'nafies.beta2@gmail.com',
           password: 'mantapjiwa'
         })
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body).toHaveProperty('email', 'nafies1@nafies.tech')
+          expect(response.body).toHaveProperty('email', 'nafies.beta2@gmail.com')
           expect(response.body).toHaveProperty('name', 'nafies')
           expect(response.body).toHaveProperty('id', expect.any(Number))
           expect(response.body).toHaveProperty('isVerified', false)
@@ -127,7 +127,7 @@ describe('User Routes', () => {
     beforeEach((done) => {
       User.create({
         name: 'nafies',
-        email: 'nafies1@nafies.tech',
+        email: 'nafies.beta2@gmail.com',
         password: 'mantapjiwa',
         isVerified: true,
         isAdmin:true
@@ -145,13 +145,13 @@ describe('User Routes', () => {
       request(app)
         .post('/auth/login')
         .send({
-          email: 'nafies1@nafies.tech',
+          email: 'nafies.beta2@gmail.com',
           password: 'mantapjiwa'
         })
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body).toHaveProperty('email', 'nafies1@nafies.tech')
+          expect(response.body).toHaveProperty('email', 'nafies.beta2@gmail.com')
           expect(response.body).toHaveProperty('name', 'nafies')
           expect(response.body).toHaveProperty('id', expect.any(Number))
           expect(response.body).toHaveProperty('isVerified', true)

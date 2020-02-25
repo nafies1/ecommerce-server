@@ -8,8 +8,7 @@ router.post('/upload',
   files.multer.single('file'),
   files.sendUploadToGCS,
   (req, res) => {
-    res.send({
-      status: 200,
+    res.status(200).json({
       message: 'Your file is successfully uploaded',
       link: req.file.cloudStoragePublicUrl
     })
