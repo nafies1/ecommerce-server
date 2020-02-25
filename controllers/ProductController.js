@@ -32,8 +32,8 @@ class ProductController {
       .then(products=>{
           res.status(200).json(products)
       })
-      .catch(err=>{
-          next(err)
+      .catch(err => {
+        next(err)
       })
   }
 
@@ -69,13 +69,14 @@ class ProductController {
 
   static updateStock (req, res, next) {
     const { stock } = req.body
+    const { id } = req.params
     Product.update({
       stock
     }, {
-      where: { id: Number(req.params.id) }
+      where: { id: Number(id) }
     })
       .then(product=>{
-        res.status(200).json({msg : `Product Stock with id ${product.id} updated successfully`})
+        res.status(200).json({ msg : `Product Stock with id ${id} updated successfully` })
       })
       .catch(err=>{
         next(err)
@@ -83,11 +84,12 @@ class ProductController {
   }
 
   static deleteProduct (req, res, next) {
+    const { id } = req.params
     Product.destroy({
-      where: { id: Number(req.params.id) }
+      where: { id: Number(id) }
     })
       .then(product=>{
-          res.status(200).json({msg : `Product with id ${product.id} deleted successfully`})
+          res.status(200).json({msg : `Product with id ${id} deleted successfully`})
       })
       .catch(err=>{
           console.log(err)
