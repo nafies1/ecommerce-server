@@ -388,4 +388,82 @@ describe('Product Routes', () => {
     })
 
   })
+
+  describe('Delete Product Test', () => {
+    let id
+    beforeEach((done) => {
+      queryInterface.bulkDelete('Products', {})
+        .then(_ => {
+          console.log('Delete product success=====================');
+          return User.create({
+            name: 'nafies',
+            email: 'nafies.beta2@gmail.com',
+            password: 'mantapjiwa',
+            isVerified: true,
+            isAdmin:true
+          })
+        })
+        .then(user => {
+          console.log('Create user success=====================');
+          tokenAuthorized = jwt.sign({ id: user.id }, process.env.SECRET)
+          return User.create({
+            name: 'nafies beta',
+            email: 'nafies.beta1@gmail.com',
+            password: 'mantapjiwa',
+            isVerified: true,
+            isAdmin:false
+          })
+        })
+        .then(user => {
+          tokenUnauthorized = jwt.sign({ id: user.id }, process.env.SECRET)
+          console.log('Token Sukses=============================');
+          return Product.create({
+            name: 'sepatu lari',
+            price: 200000,
+            stock: 11,
+            description: 'Sepatu lari',
+            image: 'https://pbs.twimg.com/profile_images/725275730267926528/dGPyaQZ6_400x400.jpg'
+          })
+        })
+        .then(product => {
+          id = product.id
+          console.log('Create product success=======================');
+          done()
+        })
+        .catch(err => done(err))
+    })
+    afterEach((done) => {
+      queryInterface.bulkDelete('Products', {})
+        .then(response => {
+          done()
+        }).catch(err => done(err))
+    })
+    // HOOKS ^^^^^^^^^^
+    test('it should return msg success object and status 200', (done) => {
+      request(app)
+        .delete(`/product/${id}`)
+        .set('token', tokenAuthorized)
+        .end((err, response) => {
+          // console.log('ini response',response.body)
+          expect(err).toBe(null)
+          expect(response.body).toHaveProperty('msg', `Product with id ${id} deleted successfully`)
+          expect(response.status).toBe(200)
+          done()
+        })
+    })
+
+    test('it should return error not authorized and status 401', (done) => {
+      request(app)
+        .delete(`/product/${id}`)
+        .set('token', tokenUnauthorized)
+        .end((err, response) => {
+          // console.log('ini response',response.body)
+          expect(err).toBe(null)
+          expect(response.body).toHaveProperty('msg', 'You are not authorized to modify product data. Only verified admin can modify product data')
+          expect(response.status).toBe(401)
+          done()
+        })
+    })
+
+  })
 })
