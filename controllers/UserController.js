@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Transaction } = require('../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {OAuth2Client} = require('google-auth-library')
@@ -34,6 +34,14 @@ class UserController {
       })
       .then(info => {
         console.log('Result of sendmail:', info.response)
+        // Create table Cart in db, defined in model as Transaction which status is false
+        return Transaction.create({
+          UserId: user.id,
+          status: false
+        })
+      })
+      .then(transaction => {
+        console.log('Create transaction succes', transaction)
         return addVerifToken(verifToken, user.id)
       })
       .then(result => {

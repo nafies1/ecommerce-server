@@ -52,11 +52,8 @@ module.exports = (sequelize, DataTypes) => {
   })
   Product.associate = function(models) {
     // associations can be defined here
-  };
-  Product.addHook('beforeCreate', (product, options) => {
-    console.log('ini name: ', product.name)
-    console.log('ini price:', product.price)
-    console.log('ini stock:', product.stock)
- })
+    Product.belongsToMany(models.Transaction, {through: 'ProductTransaction'})
+  }
+
   return Product;
 };

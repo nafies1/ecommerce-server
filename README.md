@@ -314,7 +314,16 @@ Route | Method | Description
       ```
       
 --------------
+## **Cart** :
 
+Route | Method | Description
+---|---|---
+`/cart` | GET | Fetch cart data
+`/cart` | POST | Add cart data
+`/cart/:id` | PUT | Update cart data
+`/cart/:id` | DELETE | Delete product from cart
+
+--------------
 ### Undefined Route :
 
 Route | Method | Request(s) | Response(s) | Description

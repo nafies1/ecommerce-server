@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const authRoute = require('./auth')
 const productRoute = require('./product')
+const cartRoute = require('./cart')
 // const keyfileGen = require('../helpers/keyfileGenerator')
 
 router.get('/', (req, res) => {
   // keyfileGen used to generate keyfile.json (key for access google cloud storage, for upload image)
   // Because keyfile.json is a credential key, it should not be commited. So, for deployment to heroku,
-  // this method is used for trial. Instead, You can use buildpack for gcs, please checkout
+  // this method is used for trial. Instead, You can use buildpack for gcs. Please checkout
   // https://github.com/nafies1/heroku-google-application-credentials-buildpack.
   
   // keyfileGen()
@@ -15,5 +16,6 @@ router.get('/', (req, res) => {
 
 router.use('/product', productRoute)
 router.use('/auth', authRoute)
+router.use('/cart', cartRoute)
 
 module.exports = router
