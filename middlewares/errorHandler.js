@@ -27,7 +27,7 @@ module.exports = (err, req, res, next) => {
       if (eror.message === 'email must be unique') {
         error.msg = 'Email has been registered. Please login or register with another email'
         error.name = 'duplicate_email'
-      } 
+      }
     })
     res.status(400).json({
       msg: error.msg,
