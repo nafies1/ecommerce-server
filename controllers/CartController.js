@@ -1,4 +1,4 @@
-const { Product, User, Transaction, ProductTransaction } = require('../models')
+const { Product, User, Transaction, ProductTransaction, sequelize } = require('../models')
 
 class ProductController {
   static addToCart (req, res, next) {
@@ -38,7 +38,7 @@ class ProductController {
       }
     })
       .then(products => {
-        console.log('ini products', products)
+        // console.log('ini products', products)
         res.status(200).json(products)
       })
       .catch(err => {
@@ -86,6 +86,42 @@ class ProductController {
           next(err)
       })
   }
+
+  static checkout (req, res, next) {
+
+    sequelize.transaction((t) => {
+      const { Products, id } = req.body.cart
+      const promises = []
+      let updatestock
+      Products.forEach(product => {
+        if(product.ProductTransaction.quantity > product.stock) {
+          throw new Error ()
+        } else {
+          updatestock = product.stock - product.ProductTransaction.quantity
+          promises.push(
+            Transaction.update({ status: true }, { where: { id }, transaction: t }),
+            Product.update({ stock: updatestock }, { where: { id: product.id }, transaction: t })
+          )
+        }
+      })
+      return Promise.all(promises)
+    })
+      .then(result => {
+        console.log('Berhasil nih kekny ======================================')
+        console.log(result)
+        return Transaction.create({
+          UserId: req.currentUserId,
+          status: false
+        })
+      })
+      .then(transaction => {
+        console.log('Create transaction succes', transaction)
+        res.status(200).json({
+          msg: 'Transaction Success'
+        })
+      })
+      .catch(next)
+      }
 } // The end of Product Controller
 
 module.exports = ProductController

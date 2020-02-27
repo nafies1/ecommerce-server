@@ -2,6 +2,8 @@ const router = require('express').Router()
 const authRoute = require('./auth')
 const productRoute = require('./product')
 const cartRoute = require('./cart')
+const Cart = require('../controllers/CartController')
+const authentication = require('../middlewares/authentication')
 // const keyfileGen = require('../helpers/keyfileGenerator')
 
 router.get('/', (req, res) => {
@@ -17,5 +19,6 @@ router.get('/', (req, res) => {
 router.use('/product', productRoute)
 router.use('/auth', authRoute)
 router.use('/cart', cartRoute)
+router.post('/checkout', authentication, Cart.checkout)
 
 module.exports = router
