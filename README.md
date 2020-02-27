@@ -1,6 +1,6 @@
 # e-commerce-server
 
-Base API url : **http://localhost:3000**
+Base API url : **https://shrouded-refuge-10537.herokuapp.com**
 
 ## Home
 Route | Method | Description
