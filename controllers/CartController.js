@@ -1,9 +1,9 @@
-const { Product, User, Transaction, ProductTransactions } = require('../models')
+const { Product, User, Transaction, ProductTransaction } = require('../models')
 
 class ProductController {
   static addToCart (req, res, next) {
     const { TransactionId, ProductId, quantity } = req.body
-    ProductTransactions.create({
+    ProductTransaction.create({
       TransactionId,
       ProductId,
       quantity
@@ -20,12 +20,13 @@ class ProductController {
   }
 
   static getCart (req, res, next) {
+    console.log(req.currentUserId)
     User.findByPk(Number(req.currentUserId), {
       attributes: ['id', 'name', 'email'],
       include: {
         model: Transaction,
         where: {
-          status: true
+          status: false
         },
         attributes: ['id', 'status'],
         include: {
@@ -47,8 +48,9 @@ class ProductController {
   }
 
   static updateCart (req, res, next) {
-    const { TransactionId, ProductId, quantity } = req.body
-    ProductTransactions.update({
+    const { ProductId, quantity } = req.body
+    const TransactionId = req.params.id
+    ProductTransaction.update({
       quantity
     }, {
       where : {
@@ -68,8 +70,9 @@ class ProductController {
   }
 
   static deleteFromCart (req, res, next) {
-    const { TransactionId, ProductId } = req.body
-    ProductTransactions.destroy({
+    const { TransactionId } = req.body
+    const ProductId = req.params.id
+    ProductTransaction.destroy({
       where : {
         TransactionId,
         ProductId

@@ -11,7 +11,7 @@ router.post('/upload', multer.single('file'), sendUploadToGCS, (req, res) => {
   })
 
 router.get('/', authentication, Cart.getCart)
-router.post('/', Cart.addToCart)
+router.post('/', authentication, Cart.addToCart)
 router.put('/:id', Cart.updateCart)
 router.delete('/:id', Cart.deleteFromCart)
 
