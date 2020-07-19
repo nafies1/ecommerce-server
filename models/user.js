@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
-const emailValidator = require('../helpers/emailValidationAPI')
+// const emailValidator = require('../helpers/emailValidationAPI')
 
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
@@ -11,7 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'email is not valid. please use a valid email'
+        }
+      }
     },
     password: {
       type: DataTypes.STRING,
@@ -36,22 +42,24 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   User.addHook('beforeCreate', (user, options) => {
-     return emailValidator(user.email) 
-      .then(data => {
-        if (!data.ValidAddress) {
-          throw {
-            msg: 'email is not valid. please use a valid email', 
-            status: 'bad_request',
-            joke: 'Are You a robot ? or input Dummy email ?'
-          }
-        } else {
-          const hash = bcrypt.hashSync(user.password, salt)
-          user.password = hash
-        }
-      })
-      .catch(err => {
-        throw err
-      })
+    const hash = bcrypt.hashSync(user.password, salt)
+    user.password = hash
+    //  return emailValidator(user.email) 
+    //   .then(data => {
+    //     if (!data.ValidAddress) {
+    //       throw {
+    //         msg: 'email is not valid. please use a valid email', 
+    //         status: 'bad_request',
+    //         joke: 'Are You a robot ? or input Dummy email ?'
+    //       }
+    //     } else {
+    //       const hash = bcrypt.hashSync(user.password, salt)
+    //       user.password = hash
+    //     }
+    //   })
+    //   .catch(err => {
+    //     throw err
+    //   })
   })
 
   User.associate = function(models) {

@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app = require('../app')
-const Sequelize = require('sequelize')
+// const Sequelize = require('sequelize')
 const { User, sequelize } = require('../models')
 const { queryInterface } = sequelize
 
@@ -26,7 +26,7 @@ describe('User Routes', () => {
     })
     test('it should return new user object, token, isAdmin true and status 201', (done) => {
       request(app)
-        .post('/auth/register')
+        .post('/api/v1/auth/register')
         .send({
           name: 'nafies',
           email: 'nafies.beta2@gmail.com',
@@ -50,7 +50,7 @@ describe('User Routes', () => {
 
     test('it should return new user object, token, isAdmin false and status 201', (done) => {
       request(app)
-        .post('/auth/register')
+        .post('/api/v1/auth/register')
         .send({
           name: 'nafies',
           email: 'nafies.beta2@gmail.com',
@@ -73,16 +73,16 @@ describe('User Routes', () => {
 
     test('it should return error email is not valid and status 400', (done) => {
       request(app)
-        .post('/auth/register')
+        .post('/api/v1/auth/register')
         .send({
           name: 'nafies',
-          email: 'asd@asd.id',
+          email: 'asd.id',
           password: 'mantapjiwa'
         })
         .end((err, response) => {
           // console.log('ini response',response.body)
           expect(err).toBe(null)
-          expect(response.body).toHaveProperty('msg', 'email is not valid. please use a valid email')
+          expect(response.body.errors[0]).toHaveProperty('msg', 'email is not valid. please use a valid email')
           expect(response.status).toBe(400)
           done()
         })
@@ -90,7 +90,7 @@ describe('User Routes', () => {
 
     test('it should return error password is empty and status 400', (done) => {
       request(app)
-        .post('/auth/register')
+        .post('/api/v1/auth/register')
         .send({
           name: 'nafies',
           email: 'nafies1@nafies.tech',
@@ -107,7 +107,7 @@ describe('User Routes', () => {
 
     test('it should return error password is too short and status 400', (done) => {
       request(app)
-        .post('/auth/register')
+        .post('/api/v1/auth/register')
         .send({
           name: 'nafies',
           email: 'nafies1@nafies.tech',
@@ -143,7 +143,7 @@ describe('User Routes', () => {
 
     test('it should return user object, token, and status 200', (done) => {
       request(app)
-        .post('/auth/login')
+        .post('/api/v1/auth/login')
         .send({
           email: 'nafies.beta2@gmail.com',
           password: 'mantapjiwa'
@@ -165,7 +165,7 @@ describe('User Routes', () => {
 
     test('it should return error username/password is wrong, and status 400', (done) => {
       request(app)
-        .post('/auth/login')
+        .post('/api/v1/auth/login')
         .send({
           email: 'nafies@nafies.tech',
           password: 'mantapjia'

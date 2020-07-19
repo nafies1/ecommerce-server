@@ -50,7 +50,7 @@ describe('Product Routes', () => {
     // HOOKS ^^^^^^^^^^
     test('it should return new product object and status 201', (done) => {
       request(app)
-        .post('/product')
+        .post('/api/v1/product')
         .set('token', tokenAuthorized)
         .send({
           name: 'sepatu',
@@ -76,7 +76,7 @@ describe('Product Routes', () => {
 
     test('it should return error not authorized and status 401', (done) => {
       request(app)
-        .post('/product')
+        .post('/api/v1/product')
         .set('token', tokenUnauthorized)
         .send({
           name: 'sepatu',
@@ -96,7 +96,7 @@ describe('Product Routes', () => {
 
     test('it should return error minimum value is 0 and status 400', (done) => {
       request(app)
-        .post('/product')
+        .post('/api/v1/product')
         .set('token', tokenAuthorized)
         .send({
           name: 'sepatu',
@@ -118,7 +118,7 @@ describe('Product Routes', () => {
 
     test('it should return error property is required and status 400', (done) => {
       request(app)
-        .post('/product')
+        .post('/api/v1/product')
         .set('token', tokenAuthorized)
         .send({
           name: '',
@@ -193,7 +193,7 @@ describe('Product Routes', () => {
     // HOOKS ^^^^^^^^^^
     test('it should return product object and status 200', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .send({
           name: 'sepatu',
@@ -212,7 +212,7 @@ describe('Product Routes', () => {
 
     test('it should return error not authorized and status 401', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenUnauthorized)
         .send({
           name: 'sepatu',
@@ -231,7 +231,7 @@ describe('Product Routes', () => {
 
     test('it should return error minimum value is 0 and status 400', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .send({
           name: 'sepatu',
@@ -251,7 +251,7 @@ describe('Product Routes', () => {
 
     test('it should return error property is required and status 400', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .send({
           name: 'ma',
@@ -323,7 +323,7 @@ describe('Product Routes', () => {
     // HOOKS ^^^^^^^^^^
     test('it should return product object and status 200', (done) => {
       request(app)
-        .patch(`/product/${id}`)
+        .patch(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .send({
           stock: 2
@@ -339,7 +339,7 @@ describe('Product Routes', () => {
 
     test('it should return error not authorized and status 401', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenUnauthorized)
         .send({
           stock: 2
@@ -355,7 +355,7 @@ describe('Product Routes', () => {
 
     test('it should return error minimum value is 0 and status 400', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .send({
           stock: -10
@@ -372,7 +372,7 @@ describe('Product Routes', () => {
 
     test('it should return error property is required and status 400', (done) => {
       request(app)
-        .put(`/product/${id}`)
+        .put(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .send({
           stock: null
@@ -441,7 +441,7 @@ describe('Product Routes', () => {
     // HOOKS ^^^^^^^^^^
     test('it should return msg success object and status 200', (done) => {
       request(app)
-        .delete(`/product/${id}`)
+        .delete(`/api/v1/product/${id}`)
         .set('token', tokenAuthorized)
         .end((err, response) => {
           // console.log('ini response',response.body)
@@ -454,7 +454,7 @@ describe('Product Routes', () => {
 
     test('it should return error not authorized and status 401', (done) => {
       request(app)
-        .delete(`/product/${id}`)
+        .delete(`/api/v1/product/${id}`)
         .set('token', tokenUnauthorized)
         .end((err, response) => {
           // console.log('ini response',response.body)

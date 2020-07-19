@@ -1,6 +1,6 @@
 const { Product, User, Transaction, ProductTransaction, sequelize } = require('../models')
 
-class ProductController {
+class CartController {
   static addToCart (req, res, next) {
     const { TransactionId, ProductId, quantity } = req.body
     ProductTransaction.create({
@@ -122,6 +122,6 @@ class ProductController {
       })
       .catch(next)
       }
-} // The end of Product Controller
+} // The end of Cart Controller
 
-module.exports = ProductController
+module.exports = CartController

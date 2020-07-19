@@ -8,11 +8,10 @@ const addVerifToken = require('../helpers/addVerifToken')
 
 class UserController {
   static register (req, res, next) {
-    let isAdmin
+    let isAdmin, verifToken, user
     if (req.headers.admin_secret === process.env.ADMIN_PASS) isAdmin = true
     else isAdmin = false
-    let verifToken
-    let user
+
     const { name, email, password } = req.body
     User.create({
       name,
@@ -22,6 +21,7 @@ class UserController {
       isVerified: false
     })
       .then(data => {
+        console.log(data, '========================================================');
         user = data
         const verifNum = Math.floor(Math.random()*100)
         verifToken = jwt.sign({ id: user.id, verifNum }, process.env.SECRET)

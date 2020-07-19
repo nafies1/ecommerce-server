@@ -4,6 +4,7 @@
   "description": "TDD",
   "main": "app.js",
   "scripts": {
+    "test_cover": "NODE_ENV=test jest --detectOpenHandles --testTimeout=30000 --runInBand --coverage --silent --forceExit",
     "test": "NODE_ENV=test jest --detectOpenHandles --testTimeout=30000 --runInBand --forceExit",
     "dev": "NODE_ENV=development nodemon app.js",
     "start": "node app.js"
@@ -28,6 +29,8 @@
     "nodemailer": "^6.4.2",
     "pg": "^7.18.1",
     "sequelize": "^5.21.4",
-    "sequelize-cli": "^5.5.1"
+    "sequelize-cli": "^5.5.1",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   }
 }
