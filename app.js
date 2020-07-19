@@ -8,6 +8,7 @@ const errorHandler =  require('./middlewares/errorHandler')
 const swaggerUi = require('swagger-ui-express')
 const swaggerJSDoc = require('swagger-jsdoc')
 const HOST_APP = 'localhost:3000'
+// const keyfileGen = require('../helpers/keyfileGenerator')
 
 app.use(cors())
 app.use(express.urlencoded({ extended: false }))
@@ -35,8 +36,6 @@ app.get('/api-docs.json', (req, res) => {
 })
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-
-// const keyfileGen = require('../helpers/keyfileGenerator')
 
 app.get('/', (req, res) => {
   // keyfileGen used to generate keyfile.json (key for access google cloud storage, for upload image)

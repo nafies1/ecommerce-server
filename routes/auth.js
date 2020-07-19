@@ -62,6 +62,7 @@ router.post('/register' ,User.register)
  *        description : Internal server error
  */
 router.post('/login', User.login)
+
 // router.post('/googleSign', User.googleSign)
 // router.get('/verification/:token', User.verifyAccount)
 

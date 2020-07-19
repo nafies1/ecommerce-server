@@ -11,12 +11,12 @@ router.use('/cart', cartRoute)
 
 /**
  * @swagger
- * /api/v1/users:
+ * /api/v1/checkout:
  *   post:
  *    tags : 
- *      - Users
- *    name : Register
- *    summary : register a user
+ *      - Transaction
+ *    name : Checkout
+ *    summary : Checkout transaction 
  *    produces:
  *       - application/json
  *    parameters:
@@ -33,7 +33,7 @@ router.use('/cart', cartRoute)
  *             password :
  *                type : string
  *    responses : 
- *      '201':
+ *      '200':
  *        description : success create user
  *      '500':
  *        description : Internal server error

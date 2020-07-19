@@ -8,7 +8,7 @@ const credential = {
   projectId: process.env.GCLOUD_PROJECT
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   credential.keyFilename = process.env.KEYFILE_PATH
 } 
 
@@ -53,8 +53,8 @@ const sendUploadToGCS = (req, res, next) => {
   stream.end(req.file.buffer)
 }
 
-const Multer = require('multer'),
-      multer = Multer({
+const Multer = require('multer')
+const multer = Multer({
         storage: Multer.MemoryStorage,
         limits: {
           fileSize: 5 * 1024 * 1024

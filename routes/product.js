@@ -13,7 +13,7 @@ const files = require('../middlewares/files')
  *    name : Upload
  *    summary : Upload image product
  *    produces:
- *       - application/json
+ *       - multipart/form-data
  *    parameters:
  *       - name: body
  *         in: body
@@ -21,12 +21,8 @@ const files = require('../middlewares/files')
  *           $ref: ""
  *           type: object
  *           properties :
- *             name : 
+ *             file : 
  *               type : string
- *             email :
- *                type : string
- *             password :
- *                type : string
  *    responses :
  *      '200':
  *        description : Your file is successfully uploaded
@@ -54,32 +50,18 @@ router.post('/upload',
  *    summary : Get All Products
  *    produces:
  *       - application/json
- *    parameters:
- *       - name: body
- *         in: body
- *         schema : 
- *           $ref: ""
- *           type: object
- *           properties :
- *             name : 
- *               type : string
- *             email :
- *                type : string
- *             password :
- *                type : string
  *    responses :
  *      '200':
- *        description : Your file is successfully uploaded
+ *        description : read all products
  *      '500':
  *        description : Internal server error
  */
 
 router.get('/', Product.getAllProduct)
 
-
 /**
  * @swagger
- * /api/v1/product/:id:
+ * /api/v1/product/{id}:
  *   get:
  *    tags : 
  *      - Products
@@ -88,21 +70,11 @@ router.get('/', Product.getAllProduct)
  *    produces:
  *       - application/json
  *    parameters:
- *       - name: body
- *         in: body
- *         schema : 
- *           $ref: ""
- *           type: object
- *           properties :
- *             name : 
- *               type : string
- *             email :
- *                type : string
- *             password :
- *                type : string
+ *       - name: id
+ *         in: path
  *    responses :
  *      '200':
- *        description : Your file is successfully uploaded
+ *        description : Read single product
  *      '500':
  *        description : Internal server error
  */
@@ -110,7 +82,7 @@ router.get('/:id', Product.getOneProduct)
 
 /**
  * @swagger
- * /api/v1/product/:id:
+ * /api/v1/product/{id}:
  *   patch:
  *    tags : 
  *      - Products
@@ -119,21 +91,19 @@ router.get('/:id', Product.getOneProduct)
  *    produces:
  *       - application/json
  *    parameters:
- *       - name: body
+ *       - name: id
+ *         in: path
+ *       - name: stock
  *         in: body
  *         schema : 
  *           $ref: ""
  *           type: object
  *           properties :
- *             name : 
- *               type : string
- *             email :
- *                type : string
- *             password :
- *                type : string
+ *             stock : 
+ *               type : integer
  *    responses :
  *      '200':
- *        description : Your file is successfully uploaded
+ *        description : Update stock product
  *      '500':
  *        description : Internal server error
  */
@@ -152,6 +122,8 @@ router.use(authentication, authorization)
  *    produces:
  *       - application/json
  *    parameters:
+ *       - name: token
+ *         in: headers
  *       - name: body
  *         in: body
  *         schema : 
@@ -160,13 +132,19 @@ router.use(authentication, authorization)
  *           properties :
  *             name : 
  *               type : string
- *             email :
+ *             price :
+ *                type : integer
+ *             stock :
+ *                type : integer
+ *             description :
  *                type : string
- *             password :
+ *             image :
  *                type : string
  *    responses :
  *      '200':
- *        description : Your file is successfully uploaded
+ *        description : Add Product
+ *      '401':
+ *        description : Unauthorized
  *      '500':
  *        description : Internal server error
  */
@@ -174,7 +152,7 @@ router.post('/', Product.addProduct)
 
 /**
  * @swagger
- * /api/v1/product/:id:
+ * /api/v1/product/{id}:
  *   put:
  *    tags : 
  *      - Products
@@ -183,6 +161,10 @@ router.post('/', Product.addProduct)
  *    produces:
  *       - application/json
  *    parameters:
+ *       - name: token
+ *         in: headers
+ *       - name: id
+ *         in: path
  *       - name: body
  *         in: body
  *         schema : 
@@ -191,13 +173,19 @@ router.post('/', Product.addProduct)
  *           properties :
  *             name : 
  *               type : string
- *             email :
+ *             price :
+ *                type : integer
+ *             stock :
+ *                type : integer
+ *             description :
  *                type : string
- *             password :
+ *             image :
  *                type : string
  *    responses :
  *      '200':
- *        description : Your file is successfully uploaded
+ *        description : Update product
+ *      '401':
+ *        description : Unauthorized
  *      '500':
  *        description : Internal server error
  */
@@ -214,21 +202,15 @@ router.put('/:id', Product.updateProduct)
  *    produces:
  *       - application/json
  *    parameters:
- *       - name: body
- *         in: body
- *         schema : 
- *           $ref: ""
- *           type: object
- *           properties :
- *             name : 
- *               type : string
- *             email :
- *                type : string
- *             password :
- *                type : string
+ *       - name: token
+ *         in: headers
+ *       - name: id
+ *         in: path
  *    responses :
  *      '200':
- *        description : Your file is successfully uploaded
+ *        description : Delete Product
+ *      '401':
+ *        description : Unauthorized
  *      '500':
  *        description : Internal server error
  */

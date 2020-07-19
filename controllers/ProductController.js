@@ -28,8 +28,10 @@ class ProductController {
   }
 
   static getAllProduct (req, res, next) {
+    console.log('masuk');
     Product.findAll({})
       .then(products=>{
+        console.log('masuk');
           res.status(200).json(products)
       })
       .catch(err => {
